@@ -46,6 +46,15 @@ def compute_metrics():
 
     estimator = load_estimator()
     assert estimator is not None, "Model not found"
+    
+
+def run_grading():
+    """Run grading script."""
+
+    accuracy_train, accuracy_test = compute_metrics()
+
+    assert accuracy_train > 0.99
+    assert accuracy_test > 0.99
 
 
 if __name__ == "__main__":
@@ -60,13 +69,6 @@ if __name__ == "__main__":
     accuracy_train = eval_metrics(y_true_train, y_pred_train)
     accuracy_test = eval_metrics(y_true_test, y_pred_test)
 
-    return accuracy_train, accuracy_test
 
 
-def run_grading():
-    """Run grading script."""
 
-    accuracy_train, accuracy_test = compute_metrics()
-
-    assert accuracy_train > 0.99
-    assert accuracy_test > 0.99
