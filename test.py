@@ -1,11 +1,12 @@
 """GitHub Classroom autograding script."""
 
+
 import os
 import pickle
 
 import pandas as pd
 from sklearn.metrics import accuracy_score
-
+from sklearn.preprocessing import OneHotEncoder
 
 def load_estimator():
     """Load trained model from disk."""
@@ -24,10 +25,14 @@ def load_datasets():
     train_dataset = pd.read_csv("train_dataset.csv")
     test_dataset = pd.read_csv("test_dataset.csv")
 
+    encoder = OneHotEncoder()
+
     x_train = train_dataset.drop("type", axis=1)
+    x_train = encoder.fit_transform(x_train)
     y_train = train_dataset["type"]
 
     x_test = test_dataset.drop("type", axis=1)
+    x_test = encoder.fit_transform(x_test)
     y_test = test_dataset["type"]
 
     return x_train, x_test, y_train, y_test
@@ -64,9 +69,6 @@ if __name__ == "__main__":
 
     accuracy_train = eval_metrics(y_train, y_pred_train)
     accuracy_test = eval_metrics(y_test, y_pred_test)
+    print(accuracy_test, accuracy_test)
 
     run_grading(accuracy_train, accuracy_test)
-
-
-
-
